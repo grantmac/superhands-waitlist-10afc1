@@ -1,9 +1,10 @@
 @import "tailwindcss";
+
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap");
 
 :root {
   font-family:
-    "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
+    "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #03161c;
   background: #ffffff;
@@ -26,4 +27,8 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+a {
+  color: inherit;
 }
