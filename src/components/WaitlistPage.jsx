@@ -1,4 +1,15 @@
+import { useEffect, useRef, useState } from 'react'
+
 export default function WaitlistPage() {
+  const [showEmailForm, setShowEmailForm] = useState(false)
+  const emailInputRef = useRef(null)
+
+  useEffect(() => {
+    if (showEmailForm) {
+      emailInputRef.current?.focus()
+    }
+  }, [showEmailForm])
+
   return (
     <main className="min-h-screen bg-white">
       <div className="mx-auto flex min-h-screen w-full max-w-[512px] items-center justify-center px-10 py-10">
@@ -23,59 +34,92 @@ export default function WaitlistPage() {
               Join Waitlist
             </h1>
             <p className="text-sm font-medium leading-[1.44] text-[rgba(3,22,28,0.8)]">
-              We&apos;re phasing our users, enter your details and we&apos;ll be
-              in touch as soon as its your turn.
+              We&apos;re phasing our users, enter your details and we&apos;ll be in
+              touch as soon as its your turn.
             </p>
           </div>
 
-          <button
-            type="button"
-            className="flex h-11 w-full cursor-pointer items-center justify-center gap-3 rounded-[14px] border border-[rgba(82,82,84,0.1)] bg-white px-4 py-3 text-sm font-medium text-[#03161c]"
-          >
-            <img alt="" className="h-5 w-5" src="/google-logo.svg" />
-            Continue with Google
-          </button>
-
-          <form
-            className="flex flex-col gap-[21px]"
-            onSubmit={(event) => event.preventDefault()}
-          >
-            <label className="flex flex-col gap-2">
-              <span className="text-sm font-medium text-[#03161c]">
-                Your email
-              </span>
-              <input
-                type="email"
-                placeholder="Enter email"
-                className="h-11 w-full rounded-none border border-[rgba(82,82,84,0.05)] bg-[#f7f7f7] px-3 text-sm text-[#03161c] outline-none placeholder:text-[rgba(3,22,28,0.5)]"
-              />
-            </label>
-
-            <label className="flex flex-col gap-2">
-              <span className="text-sm font-medium text-[#03161c]">
-                Create a password
-              </span>
-              <input
-                type="password"
-                placeholder="Min 6 characters"
-                className="h-11 w-full rounded-none border border-[rgba(82,82,84,0.05)] bg-[#f7f7f7] px-3 text-sm text-[#03161c] outline-none placeholder:text-[rgba(3,22,28,0.5)]"
-              />
-            </label>
-
-            <button
-              type="submit"
-              className="h-11 w-full cursor-pointer rounded-[14px] border border-[rgba(82,82,84,0.05)] bg-gradient-to-b from-[#c4f2ff] to-[#b2eeff] px-4 py-3 text-sm font-semibold text-[#009eca]"
+          <div className="flex flex-col gap-3">
+            <div
+              aria-hidden={showEmailForm}
+              className={`grid transition-[grid-template-rows,opacity,transform] duration-300 ease-out ${
+                showEmailForm
+                  ? 'grid-rows-[0fr] -translate-y-2 opacity-0'
+                  : 'grid-rows-[1fr] translate-y-0 opacity-100'
+              }`}
             >
-              Join the Waitlist
-            </button>
-          </form>
+              <div className="flex flex-col gap-3 overflow-hidden">
+                <button
+                  type="button"
+                  className="flex h-11 w-full cursor-pointer items-center justify-center gap-3 rounded-[14px] border border-[rgba(82,82,84,0.1)] bg-white px-4 py-3 text-sm font-medium text-[#03161c]"
+                >
+                  <img alt="" className="h-5 w-5" src="/google-logo.svg" />
+                  Continue with Google
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowEmailForm(true)}
+                  className="flex h-11 w-full cursor-pointer items-center justify-center rounded-[14px] border border-[rgba(82,82,84,0.1)] bg-white px-4 py-3 text-sm font-medium text-[#03161c]"
+                >
+                  Continue with email
+                </button>
+              </div>
+            </div>
+
+            <div
+              aria-hidden={!showEmailForm}
+              className={`grid transition-[grid-template-rows,opacity,transform] duration-300 ease-out ${
+                showEmailForm
+                  ? 'grid-rows-[1fr] translate-y-0 opacity-100'
+                  : 'pointer-events-none grid-rows-[0fr] -translate-y-2 opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden">
+                <form
+                  className="flex flex-col gap-[21px]"
+                  onSubmit={(event) => event.preventDefault()}
+                >
+                  <label className="flex flex-col gap-2">
+                    <span className="text-sm font-medium text-[#03161c]">
+                      Your email
+                    </span>
+                    <input
+                      ref={emailInputRef}
+                      type="email"
+                      placeholder="Enter email"
+                      className="h-11 w-full rounded-none border border-[rgba(82,82,84,0.05)] bg-[#f7f7f7] px-3 text-sm text-[#03161c] outline-none placeholder:text-[rgba(3,22,28,0.5)]"
+                    />
+                  </label>
+
+                  <label className="flex flex-col gap-2">
+                    <span className="text-sm font-medium text-[#03161c]">
+                      Create a password
+                    </span>
+                    <input
+                      type="password"
+                      placeholder="Min 6 characters"
+                      className="h-11 w-full rounded-none border border-[rgba(82,82,84,0.05)] bg-[#f7f7f7] px-3 text-sm text-[#03161c] outline-none placeholder:text-[rgba(3,22,28,0.5)]"
+                    />
+                  </label>
+
+                  <button
+                    type="submit"
+                    className="h-11 w-full cursor-pointer rounded-[14px] border border-[rgba(82,82,84,0.05)] bg-gradient-to-b from-[#c4f2ff] to-[#b2eeff] px-4 py-3 text-sm font-semibold text-[#009eca]"
+                  >
+                    Join the Waitlist
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <p className="text-sm leading-[1.44] text-[rgba(3,22,28,0.5)]">
-            By signing up, you agree to our{" "}
+            By signing up, you agree to our{' '}
             <a href="#" className="underline">
               Terms of Service
-            </a>{" "}
-            and{" "}
+            </a>{' '}
+            and{' '}
             <a href="#" className="underline">
               Privacy Policy
             </a>
@@ -83,5 +127,5 @@ export default function WaitlistPage() {
         </div>
       </div>
     </main>
-  );
+  )
 }
